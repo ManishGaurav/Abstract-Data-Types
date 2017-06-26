@@ -104,17 +104,16 @@ class SinglyLinkedList:
         return not self.head
 
     def isEqual(self, otherList):
-        if len(self) != len(otherList):
+        firstListNode = self.head
+        secondListNode = otherList.head
+        while firstListNode and secondListNode:
+            if firstListNode.key != secondListNode.key:
+                return False
+            firstListNode = firstListNode.next
+            secondListNode = secondListNode.next
+        if firstListNode or secondListNode:
             return False
-        else:
-            firstListNode = self.head
-            secondListNode = otherList.head
-            while firstListNode and secondListNode:
-                if firstListNode.key != secondListNode.key:
-                    return False
-                firstListNode = firstListNode.next
-                secondListNode = secondListNode.next
-            return True
+        return True
 
     def isSorted(self):
         if self.head is None or self.head.next is None:
