@@ -13,6 +13,26 @@ class SinglyLinkedList:
         self.head = head
         self.size = size
 
+    def circularLeftShift(self, shift):
+        if shift not in range(len(self) + 1):
+            raise ValueError("Shift value must be in range [0, {}].".format(len(self)))
+        if self.head is None or shift == 0 or shift == len(self):
+            return
+        index = 0
+        currentNode = self.head
+        while currentNode:
+            if index == shift - 1:
+                lastNodeToBe = currentNode
+            if index == shift:
+                firstNodeToBe = currentNode
+            if currentNode.next is None:
+                currentLastNode = currentNode
+            index += 1
+            currentNode = currentNode.next
+        lastNodeToBe.next = None
+        currentLastNode.next = self.head
+        self.head = firstNodeToBe
+
     def deleteAtBeginning(self):
         if self.head is None:
             return
@@ -284,7 +304,6 @@ class SinglyLinkedList:
 
 def main():
     pass
-
 
 if __name__ == '__main__':
     main()
