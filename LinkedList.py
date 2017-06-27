@@ -83,9 +83,9 @@ class SinglyLinkedList:
         duplicateList = SinglyLinkedList()
         currentNode = self.head
         while currentNode:
-            duplicateList.insertAtEnd(currentNode.key)
+            duplicateList.insertAtBeginning(currentNode.key)
             currentNode = currentNode.next
-        return duplicateList
+        return duplicateList.getReverseList()
 
     def getIndex(self, key):
         currentNode = self.head
@@ -270,7 +270,8 @@ class SinglyLinkedList:
     def updateKey(self, oldKey, newKey):
         if self.head is None:
             return
-        found, previousNode, currentNode = self._getPreviousAndCurrentNode(oldKey)
+        found, previousNode, currentNode = self._getPreviousAndCurrentNode(
+            oldKey)
         if not found:
             raise ValueError("'{}' does not exit in the list.".format(oldKey))
         currentNode.key = newKey
@@ -293,18 +294,18 @@ class SinglyLinkedList:
         mergedList = SinglyLinkedList()
         while firstListNode and secondListNode:
             if firstListNode.key <= secondListNode.key:
-                mergedList.insertAtEnd(firstListNode.key)
+                mergedList.insertAtBeginning(firstListNode.key)
                 firstListNode = firstListNode.next
             else:
-                mergedList.insertAtEnd(secondListNode.key)
+                mergedList.insertAtBeginning(secondListNode.key)
                 secondListNode = secondListNode.next
         while firstListNode:
-            mergedList.insertAtEnd(firstListNode.key)
+            mergedList.insertAtBeginning(firstListNode.key)
             firstListNode = firstListNode.next
         while secondListNode:
-            mergedList.insertAtEnd(secondListNode.key)
+            mergedList.insertAtBeginning(secondListNode.key)
             secondListNode = secondListNode.next
-        return mergedList
+        return mergedList.getReverseList()
 
     def _splitList(self):
         if self.head is None or self.head.next is None:
@@ -347,7 +348,6 @@ class DoublyLinkedList(SinglyLinkedList):
                 currentLastNode = currentNode
             index += 1
             currentNode = currentNode.next
-        print(lastNodeToBe.key, firstNodeToBe.key, currentLastNode.key)
         lastNodeToBe.next = None
         lastNodeToBe.prev = currentLastNode
         currentLastNode.next = self.head
@@ -408,9 +408,9 @@ class DoublyLinkedList(SinglyLinkedList):
         duplicateList = DoublyLinkedList()
         currentNode = self.head
         while currentNode:
-            duplicateList.insertAtEnd(currentNode.key)
+            duplicateList.insertAtBeginning(currentNode.key)
             currentNode = currentNode.next
-        return duplicateList
+        return duplicateList.getReverseList()
 
     def getReverseList(self):
         currentNode = self.head
@@ -469,7 +469,6 @@ class DoublyLinkedList(SinglyLinkedList):
     def reverseList(self):
         if self.head is None or self.head.next is None:
             return
-        tempNode = None
         currentNode = self.head
         while currentNode:
             if currentNode.next is None:
@@ -490,7 +489,7 @@ class DoublyLinkedList(SinglyLinkedList):
             while currentNode.next and currentNode.next.key < key:
                 currentNode = currentNode.next
             newNode = Node(key, currentNode.next, currentNode)
-            currentNode.next.prev =  newNode
+            currentNode.next.prev = newNode
             currentNode.next = newNode
             self._size += 1
 
@@ -517,14 +516,14 @@ class DoublyLinkedList(SinglyLinkedList):
             raise ValueError("'{}' does not exit in the list.".format(y))
         if xIndex > yIndex:
             xNode, yNode = yNode, xNode
-        if xNode.prev is None: # is xNode the first node?
+        if xNode.prev is None:  # is xNode the first node?
             self.head = yNode
         else:
             xNode.prev.next = yNode
-        if yNode.next is not None: # is yNode the last node?
+        if yNode.next is not None:  # is yNode the last node?
             yNode.next.prev = xNode
-        if xNode.next == yNode: # are the nodes adjacent?
-            xNode.next, yNode.next  = yNode.next, xNode
+        if xNode.next == yNode:  # are the nodes adjacent?
+            xNode.next, yNode.next = yNode.next, xNode
             xNode.prev, yNode.prev = yNode, xNode.prev
         else:
             yNode.prev.next = xNode
@@ -551,18 +550,18 @@ class DoublyLinkedList(SinglyLinkedList):
         mergedList = DoublyLinkedList()
         while firstListNode and secondListNode:
             if firstListNode.key <= secondListNode.key:
-                mergedList.insertAtEnd(firstListNode.key)
+                mergedList.insertAtBeginning(firstListNode.key)
                 firstListNode = firstListNode.next
             else:
-                mergedList.insertAtEnd(secondListNode.key)
+                mergedList.insertAtBeginning(secondListNode.key)
                 secondListNode = secondListNode.next
         while firstListNode:
-            mergedList.insertAtEnd(firstListNode.key)
+            mergedList.insertAtBeginning(firstListNode.key)
             firstListNode = firstListNode.next
         while secondListNode:
-            mergedList.insertAtEnd(secondListNode.key)
+            mergedList.insertAtBeginning(secondListNode.key)
             secondListNode = secondListNode.next
-        return mergedList
+        return mergedList.getReverseList()
 
     def _splitList(self):
         if self.head is None or self.head.next is None:
@@ -583,4 +582,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
